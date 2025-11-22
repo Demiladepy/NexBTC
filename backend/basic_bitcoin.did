@@ -32,36 +32,21 @@ type get_utxos_response = record {
   next_page: opt blob;
 };
 
+type get_block_headers_response = record {
+  tip_height: nat32;
+  block_headers: vec blob;
+};
+
 service : (network) -> {
+    // Bitcoin Vault - User deposit and withdrawal
+    "get_my_deposit_address": () -> (bitcoin_address);
+    "get_my_vault_balance": () -> (satoshi);
+    "get_my_vault_utxos": () -> (get_utxos_response);
+    "withdraw": (destination_address: bitcoin_address, amount_in_satoshi: satoshi) -> (transaction_id);
+
+    // Bitcoin blockchain query endpoints (public)
     "get_balance": (address: bitcoin_address) -> (satoshi);
-
     "get_utxos": (bitcoin_address) -> (get_utxos_response);
-
     "get_current_fee_percentiles": () -> (vec millisatoshi_per_vbyte);
-
-    "get_p2pkh_address": () -> (bitcoin_address);
-
-    "send_from_p2pkh_address": (record {
-      destination_address: bitcoin_address;
-      amount_in_satoshi: satoshi;
-    }) -> (transaction_id);
-
-    "get_p2tr_key_only_address": () -> (bitcoin_address);
-
-    "send_from_p2tr_key_only_address": (record {
-      destination_address: bitcoin_address;
-      amount_in_satoshi: satoshi;
-    }) -> (transaction_id);
-
-    "get_p2tr_address": () -> (bitcoin_address);
-
-    "send_from_p2tr_address_key_path": (record {
-      destination_address: bitcoin_address;
-      amount_in_satoshi: satoshi;
-    }) -> (transaction_id);
-
-    "send_from_p2tr_address_script_path": (record {
-      destination_address: bitcoin_address;
-      amount_in_satoshi: satoshi;
-    }) -> (transaction_id);
+    "get_block_headers": (start_height: nat32, end_height: opt nat32) -> (get_block_headers_response);
 }
