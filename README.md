@@ -1,25 +1,196 @@
-# Hello, world!
+# NexBTC — Bitcoin Wallet & Bridge on ICP
 
-"Hello, world!" projects are a common starting point for developers learning new languages or platforms, as it provides a simple demonstration of how a programming language can be written for an application.
+A decentralized Bitcoin wallet built with the Internet Computer Protocol (ICP), leveraging Chain-Key Bitcoin for native BTC transactions without intermediaries.
+NexBTC allows users to send, receive, and manage Bitcoin directly on-chain, with a fast React frontend and secure Motoko backend canister.
 
-This application's logic is written in [Motoko](https://internetcomputer.org/docs/motoko/main/getting-started/motoko-introduction), a programming language designed specifically for developing canisters on ICP.
+# Overview
 
-## Deploying from ICP Ninja
+NexBTC is built to showcase how developers can combine:
 
-When viewing this project in ICP Ninja, you can deploy it directly to the mainnet for free by clicking "Run" in the upper right corner. Open this project in ICP Ninja:
+ICP Canisters
 
-[![](https://icp.ninja/assets/open.svg)](https://icp.ninja/i?g=https://github.com/dfinity/examples/motoko/hello_world)
+Motoko
 
-## Project structure
+Chain-Key Bitcoin
 
-The `/backend` folder contains the Motoko canister, `app.mo`. The `/frontend` folder contains web assets for the application's user interface. The user interface is written with plain JavaScript, but any frontend framework can be used.
+Secure wallet interfaces
 
-Edit the `mops.toml` file to add [Motoko dependencies](https://mops.one/) to the project.
+Modern React frontends
 
-## Build and deploy from the command-line
+This project demonstrates a minimal, production-ready example of integrating a Bitcoin wallet UI with an ICP Motoko canister that interacts with Bitcoin.
 
-To migrate your ICP Ninja project off of the web browser and develop it locally, follow these steps. These steps are necessary if you want to deploy this project for long-term, production use on the mainnet.
+The application was originally scaffolded as a Hello World! ICP Ninja template, then expanded into a full Bitcoin wallet prototype.
 
-### 1. Download your project from ICP Ninja using the 'Download files' button on the upper left corner under the pink ninja star icon.
+# Project Structure
+NexBTC/
+│
+├── backend/
+│   ├── app.mo               # Main Motoko canister logic
+│   ├── mops.toml            # Dependency management for Motoko
+│   └── BUILD.md             # ICP Ninja → local setup migration guide
+│
+├── frontend/
+│   ├── src/
+│   │   ├── App.tsx          # Main React Application
+│   │   ├── components/      # UI Components (Sidebar, Navigation, Cards, etc.)
+│   │   ├── common/          # Reusable logic + utility modules
+│   │   ├── layout/          # App layout (header, footer, wrappers)
+│   │   ├── types/           # TypeScript typings
+│   │   ├── pages/           # Route pages
+│   │   └── styles/          # TailwindCSS + global styles
+│   └── index.html           # Entry HTML file
+│
+├── README.md
+└── package.json
 
-### 2. Open the `BUILD.md` file for further instructions.
+# Tech Stack
+Frontend
+
+React + TypeScript
+
+TailwindCSS v4
+
+React Router
+
+ICP Agent JS (for canister connection)
+
+Backend
+
+Motoko
+
+ICP Canisters
+
+Chain-Key Bitcoin integration
+
+# Installation & Setup
+1️⃣ Clone the Project
+git clone https://github.com/Demiladepy/NexBTC
+cd NexBTC
+
+# Frontend Setup
+2️⃣ Install Dependencies
+cd frontend
+npm install
+
+3️⃣ Start the Frontend
+npm run dev
+
+
+Your app will be live at:
+
+http://localhost:5173/
+
+# Backend (Motoko) Setup
+From ICP Ninja
+
+This project can be deployed directly on ICP Ninja.
+
+Open the project in ICP Ninja.
+
+Click Run (top right).
+
+Your Motoko canister deploys instantly to mainnet—for free.
+
+🔗 Open ICP Ninja: (add your project URL)
+
+# Running the Canister Locally (dfx)
+
+To run the canister locally, you must migrate the Ninja project to your machine:
+
+1. Download your project
+
+Click “Download files” under the pink ninja star icon inside ICP Ninja.
+
+2. Install DFX
+sh -ci "$(curl -fsSL https://internetcomputer.org/install.sh)"
+
+3. Start a local replica
+dfx start --background
+
+4. Deploy the backend
+dfx deploy
+
+# Motoko Canister Logic (Summary)
+
+The backend handles:
+
+Generating and storing Bitcoin addresses
+
+Querying Bitcoin balances
+
+Processing BTC transfers
+
+Communicating with ICP’s Chain-Key Bitcoin API
+
+Core file:
+backend/app.mo
+
+# Example Output (Hello World Template)
+
+The minimal starting point for the Motoko application is:
+
+import Debug "mo:base/Debug";
+
+actor {
+  public query func greet(name : Text) : async Text {
+    return "Hello, " # name # "!";
+  };
+};
+
+
+NexBTC extends this with complete Bitcoin logic.
+
+# Environment Variables
+
+Create a .env file inside /frontend:
+
+VITE_CANISTER_ID={id}
+VITE_DFX_NETWORK=local
+
+
+(If you are using the production deployment, replace with mainnet IDs.)
+
+# Build for Production
+Frontend
+npm run build
+
+Backend
+dfx deploy --network ic
+
+# Hackathon-Ready Notes
+
+This README follows the Encode Club format, emphasizing:
+
+clarity
+
+structure
+
+ease of review
+
+developer reproducibility
+
+Add these sections before submission:
+
+Architecture Diagram
+
+User Flow
+
+Security Notes
+
+Demo Link
+
+Pitch Deck Link
+
+Team Information
+
+I can generate all of these next.
+
+# Support & Contribution
+
+Pull requests are welcome.
+
+If you'd like help improving the canister or adding Bitcoin transactions, open an issue.
+
+🟧 License
+
+MIT License.
